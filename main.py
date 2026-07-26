@@ -41,31 +41,46 @@ def main():
         {"role": "user", "content": user_prompt},
     ]
 
+    #LOOK AT THIS, this was for type checker later in printing block
+    response = None
+    
     #available_functions was list of dict json, schema. so this was used to satisfy type checker
     tools_parameter: Any = available_functions
-    response = client.chat.completions.create(
-        model= "openrouter/free",
-        messages= messages,
-        temperature = 0.0,
-        tools = tools_parameter
-    )
+    def call_llm():
+        return client.chat.completions.create(
+            model= "openrouter/free",
+            messages= messages,
+            temperature = 0.0,
+            tools = tools_parameter
+        )
 
-    if response.usage is None or not response.usage.prompt_tokens:
-        raise RuntimeError
+    for call in range(20):
+        if call == 19:
+            sys.exit(1)
+        response = call_llm()
+        if response.usage is None or not response.usage.prompt_tokens:
+            raise RuntimeError
 
-    message = response.choices[0].message
-    if message.tool_calls:
-        for tool_call in message.tool_calls:
-            result_message = call_function(tool_call, verbose)
-            if not result_message.get("content"):
-                raise Exception("function_result return None")
-            if verbose:
-                print(f"-> {result_message['content']}")
+        message = response.choices[0].message
+        messages.append(message)
+        if message.tool_calls:
+            for tool_call in message.tool_calls:
+                result_message = call_function(tool_call, verbose)
+                if not result_message.get("content"):
+                    raise Exception("function_result return None")
+                if verbose:
+                    print(f"-> {result_message['content']}")
+                messages.append(result_message)
+        else:
+            break
 
+    
 
-
-
-    #Printing Block
+    #Printing Blo
+    if response is None:
+        raise RuntimeError("Loop never ran")
+    if response.usage is None:
+        raise RuntimeError("The metadata of prompts and completions tokens is None")
     final_content = response.choices[0].message.content or "Done executing tool calls."
     print(f"""
     User prompt: {user_prompt}.

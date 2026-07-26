@@ -47,10 +47,6 @@ schema_get_file_content = {
                     "type": "string",
                     "description": "Path to the file to read, relative to the directory.",
                 },
-                "directory": {
-                    "type": "string",
-                    "description": "Directory path relative to the working directory (defaults to current working directory if omitted).",
-                },
             },
             "required": ["file_path"],
         },

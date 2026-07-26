@@ -39,11 +39,7 @@ schema_write_file= {
                 "content" : {
                     "type": "string",
                     "description": "The content that gonna be written in the specified file",
-                },
-                "directory": {
-                    "type": "string",
-                    "description": "Directory path relative to the working directory (defaults to current working directory if omitted).",
-                },
+                }
             },
             "required": ["file_path", "content"],
         },
