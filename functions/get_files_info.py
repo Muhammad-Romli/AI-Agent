@@ -28,3 +28,23 @@ def get_files_info(working_directory:str, directory:str = ".") -> str:
 
     except Exception as e:
         return f"Error: get_files_info is returning error: {e}"
+
+
+
+#this was schema for get files_info obviusly
+schema_get_files_info = {
+    "type": "function",
+    "function": {
+        "name": "get_files_info",
+        "description": "Lists files in a specified directory relative to the working directory(THIS DOES NOT RUN THE .py FILE), providing file size and directory status",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "directory": {
+                    "type": "string",
+                    "description": "Directory path to list files from, relative to the working directory (default is the working directory itself)",
+                },
+            },
+        },
+    },
+}

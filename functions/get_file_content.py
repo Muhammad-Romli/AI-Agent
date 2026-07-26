@@ -30,3 +30,29 @@ def get_file_content(working_directory:str, file_path:str) -> str:
 
     except Exception as e:
         return f"Error: get_file_content module failed to run: {e}"
+
+
+
+
+
+schema_get_file_content = {
+    "type": "function",
+    "function": {
+        "name": "get_file_content",
+        "description": "Get the content of a file located at the specified file path relative to the given working directory.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "Path to the file to read, relative to the directory.",
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "Directory path relative to the working directory (defaults to current working directory if omitted).",
+                },
+            },
+            "required": ["file_path"],
+        },
+    },
+}
