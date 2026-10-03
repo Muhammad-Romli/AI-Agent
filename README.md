@@ -1,7 +1,5 @@
 # AI Agent
 
-A small CLI AI agent built as part of the backend curriculum on [Boot.dev](https://www.boot.dev). It demonstrates tool/function calling and an agent loop that feeds tool results back to the model.
-
 > **Warning: experimental toy project.**
 > This agent has no real sandboxing, permission system, or execution guardrails, unlike production tools such as Claude Code.
 > - Don't run it on production systems or give it access to sensitive files or API keys.
